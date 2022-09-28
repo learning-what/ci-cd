@@ -10,8 +10,6 @@ RUN npm install && npm run build
 # nginx images
 FROM nginx:alpine
 
-CMD ["rm", "-r", "./*"]
-
 COPY --from=builder /src/dist/ /usr/share/nginx/html
 
 COPY --from=builder /src/nginx.conf /etc/nginx/nginx.conf
