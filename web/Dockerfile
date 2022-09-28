@@ -1,5 +1,5 @@
 # nodejs images
-FROM node:16
+FROM node:16 as builder
 
 WORKDIR /src
 
@@ -12,9 +12,9 @@ FROM nginx:alpine
 
 CMD ["rm", "-r", "./*"]
 
-COPY --from=node:16 /src/dist/ /usr/share/nginx/html
+COPY --from=builder /src/dist/ /usr/share/nginx/html
 
-COPY --from=node:16 /src/nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /src/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
