@@ -9,3 +9,5 @@ services:
     build: ./serve
     ports:
       - "9090:9090"
+    volumes:
+      - /etc/project:/etc/project

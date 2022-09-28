@@ -9,6 +9,8 @@ WORKDIR /src
 
 # Set GOPROXY to fast download speed in China
 ENV GOPROXY https://proxy.golang.com.cn,direct
+# Custom environment variable
+ENV CONFIG_DIR /etc/project
 
 # Copy core code files
 COPY . .
