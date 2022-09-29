@@ -35,7 +35,8 @@ jobs:
 
       - name: 📡 Add Known Host
         run: |
-          echo "" >>~/.ssh/known_hosts
+          touch ~/.ssh/known_hosts
+          echo "" >> ~/.ssh/known_hosts
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       - name: 🔑 Install SSH Key
