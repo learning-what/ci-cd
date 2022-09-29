@@ -22,7 +22,7 @@ jobs:
       
       - name: 🔨 Build React App
         run: |
-          cd ./
+          cd ./web
           npm install
           npm run build
 
