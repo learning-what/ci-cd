@@ -23,7 +23,7 @@ RUN go mod download
 RUN go build -o app
 
 # Expose container port
-EXPOSE 9090
+EXPOSE 12306
 
 # Run the built excutable file
 ENTRYPOINT ["./app"]
