@@ -17,8 +17,8 @@ jobs:
 
       - name: 🔧 Setup Node
         uses: actions/setup-node@v3
-          with:
-            node-version: 16
+        with:
+          node-version: 16
       - run: echo "😀 Node v16 has been installed."
 
       - name: ⚙️ Setup Go
