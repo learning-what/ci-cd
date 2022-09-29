@@ -5,7 +5,7 @@ on:
     branches:
       - master
 jobs:
-  🌐 Build React App:
+  Build React App:
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -39,7 +39,7 @@ jobs:
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
-  🧱 Build Go App:
+  Build Go App:
       runs-on: ubuntu-latest
       environment: production
       steps:
