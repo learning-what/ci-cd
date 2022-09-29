@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - master
-  pull_requests:
-    branches:
-      - master
 jobs:
   🌐 Build React App:
     runs-on: ubuntu-latest
