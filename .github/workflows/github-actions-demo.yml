@@ -36,7 +36,7 @@ jobs:
           known_hosts: ssh-keyscan -H ${{ secrets.SSH_HOST }}
 
       - name: 💻 Deploy To Nginx
-        run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ OUTPUT_DIR }}
+        run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.OUTPUT_DIR }}
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
