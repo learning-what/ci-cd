@@ -27,7 +27,9 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script_stop: true
           script: |
-            cd /home/ecs-user/global/nginx/chouyatou.live/ci-cd
+            rm -r ${{ secrets.REPO_DIR }}/${{ github.repository }}
+            mkdir ${{ secrets.REPO_DIR }}/${{ github.repository }}
+            cd ${{ secrets.REPO_DIR }}/${{ github.repository }}
             pwd
 
 
