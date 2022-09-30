@@ -38,15 +38,15 @@ jobs:
       - name: 📡 Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> /home/runner/.ssh/known_hosts
 
-      - name: 📡 List Files
-        run: | 
-          cd /home/runner/.ssh && ls -al && cat known_hosts && cat id_rsa
+      # - name: 📡 List Files
+      #   run: | 
+      #     cd /home/runner/.ssh && ls -al && cat known_hosts && cat id_rsa
 
-      - name: 📡 Adding Known Hosts
-        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> $HOME/.ssh/known_hosts
+      # - name: 📡 Adding Known Hosts
+      #   run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> $HOME/.ssh/known_hosts
 
-      # - name: 💻 Deploy To Nginx
-      #   run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.OUTPUT_DIR }}
+      - name: 💻 Deploy To Nginx
+        run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.OUTPUT_DIR }}
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
