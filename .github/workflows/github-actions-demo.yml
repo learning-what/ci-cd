@@ -25,6 +25,10 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
-          script: ./deploy.sh
+          script_stop: true
+          script: |
+            cd /home/ecs-user/global/nginx/chouyatou.live/ci-cd
+            pwd
+
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
