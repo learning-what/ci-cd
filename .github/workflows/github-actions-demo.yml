@@ -35,8 +35,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ssh-keyscan -H ${{ secrets.SSH_HOST }}
 
-      # - name: 💻 Deploy To Nginx
-      #   run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ecs-user/${{ github.repository }}/
+      - name: 💻 Deploy To Nginx
+        run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ OUTPUT_DIR }}
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
