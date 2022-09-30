@@ -1,13 +1,11 @@
 version: '3.9'
 
 services:
-  web:
-    build: ./web
-    ports:
-      - "80:80"
   serve:
     build: ./serve
     ports:
-      - "9090:9090"
+      - "12306:12306"
+    environment:
+      - CONFIG_DIR=/usr/local/etc
     volumes:
-      - /etc/project:/etc/project
+      - /usr/local/etc:/usr/local/etc
