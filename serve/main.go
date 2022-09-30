@@ -1,10 +1,8 @@
 package main
 
 import (
-	"database/sql"
 	"encoding/json"
 	"github.com/gorilla/mux"
-	_ "github.com/lib/pq"
 	"log"
 	"net/http"
 	"os"
@@ -25,11 +23,15 @@ var Props struct {
 	} `json:"db"`
 }
 
-var pg *sql.DB
-
 type Form struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
+}
+
+var users = map[string]string{
+	"zhangsan": "123456",
+	"lisi": "abcdef",
+	"foo": "bar",
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -50,13 +52,13 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var id int
-	row := pg.QueryRow(`
-		select id from user_info where username = $1 and password = $2
-	`, form.Username, form.Password)
-	err = row.Scan(&id)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+	password, exist := users[form.Username]
+	if !exist {
+		http.Error(w, "user is not exist", http.StatusBadRequest)
+		return
+	}
+	if password != form.Password {
+		http.Error(w, "username or password is not correct", http.StatusBadRequest)
 		return
 	}
 
@@ -74,7 +76,7 @@ func main() {
 	if dir == "" {
 		log.Fatalf("get empty config directory")
 	}
-	f, err := os.Open(filepath.Join(dir, "fullstack.dev.json"))
+	f, err := os.Open(filepath.Join(dir, "ci-cd.dev.json"))
 	if err != nil {
 		log.Fatalf("open config file: %s", err)
 	}
@@ -83,13 +85,6 @@ func main() {
 		log.Fatalf("decode props: %s", err)
 	}
 	log.Println("configuration is loaded")
-
-	// connect pgsql
-	pg, err = sql.Open("postgres", Props.DB.PG.Dsn)
-	if err != nil {
-		log.Fatalf("connect postgresql: %s", err)
-	}
-	log.Println("connect to postgresql database")
 
 	// define request router
 	r := mux.NewRouter()

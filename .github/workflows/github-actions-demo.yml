@@ -9,18 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - name: 📦 Action Context
+      - name: 🧱 Action Context
         run: |
           echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
           echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
           echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
 
-      - name: Check out repository code
+      - name: 🧲 Check out repository code
         uses: actions/checkout@v3
-
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
 
       - name: ⚙️ Setup Node
         uses: actions/setup-node@v3
@@ -36,20 +32,26 @@ jobs:
       - name: 🔑 Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
-          key: ${{ secrets.SSH_PUBLIC_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ssh-keyscan -H ${{ secrets.SSH_HOST }}
 
-      - name: 💻 Deploy To Nginx
-        run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ecs-user/${{ github.repository }}/
+      # - name: 💻 Deploy To Nginx
+      #   run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ecs-user/${{ github.repository }}/
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
-  Build-Go-App:
-      runs-on: ubuntu-latest
-      environment: production
-      steps:
-      - name: 📦 Action Context
-        run: |
-          echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-          echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-          echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+  # Go-Build:
+  #     runs-on: ubuntu-latest
+  #     environment: production
+  #     steps:
+  #     - name: 🧱 Action Context
+  #       run: |
+  #         echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+  #         echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+  #         echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
+  #     - name: 🧲 Check out repository code
+  #       uses: actions/checkout@v3
+
+  #     - name: 🔨 Build Go Application
+  #       run: echo "GOGOGO"
