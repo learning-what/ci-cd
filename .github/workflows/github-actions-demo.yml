@@ -5,7 +5,7 @@ on:
     branches:
       - master
 jobs:
-  Build-React-App:
+  Build-App:
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -18,50 +18,13 @@ jobs:
       - name: 🧲 Check out repository code
         uses: actions/checkout@v3
 
-      - name: ⚙️ Setup Node
-        uses: actions/setup-node@v3
+      - name: 📡 Execute SSH Commands
+        uses: appleboy/ssh-action@master
         with:
-          node-version: 16
-      
-      - name: 🔨 Build React App
-        run: |
-          cd ./web
-          npm install
-          npm run build
-
-      - name: 🔑 Install SSH Key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
-
-      - name: 📡 Adding Known Hosts
-        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> /home/runner/.ssh/known_hosts
-
-      # - name: 📡 List Files
-      #   run: | 
-      #     cd /home/runner/.ssh && ls -al && cat known_hosts && cat id_rsa
-
-      # - name: 📡 Adding Known Hosts
-      #   run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> $HOME/.ssh/known_hosts
-
-      - name: 💻 Deploy To Nginx
-        run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.OUTPUT_DIR }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: ./deploy.sh
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
-
-  # Go-Build:
-  #     runs-on: ubuntu-latest
-  #     environment: production
-  #     steps:
-  #     - name: 🧱 Action Context
-  #       run: |
-  #         echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-  #         echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-  #         echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-
-  #     - name: 🧲 Check out repository code
-  #       uses: actions/checkout@v3
-
-  #     - name: 🔨 Build Go Application
-  #       run: echo "GOGOGO"
