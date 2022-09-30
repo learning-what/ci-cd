@@ -29,6 +29,10 @@ jobs:
           npm install
           npm run build
 
+      - name: 📡 List Files
+        run: | 
+          cd /home/runner/.ssh && ls -al
+
       - name: 📡 Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> /home/runner/.ssh/known_hosts
 
