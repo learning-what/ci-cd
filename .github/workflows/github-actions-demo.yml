@@ -39,10 +39,15 @@ jobs:
           known_hosts: ssh-keyscan -H ${{ secrets.SSH_HOST }}
 
       - name: 📡 List Files
-        run: ls .ssh
+        run: | 
+          mkdir -p /home/runner && chmod -R 777 /home/runner
+          echo "HOME=/home/runner" >> $GITHUB_ENV
 
-      - name: 💻 Deploy To Nginx
-        run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.OUTPUT_DIR }}
+      - name: 📡 Adding Known Hosts
+        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> $HOME/.ssh/known_hosts
+
+      # - name: 💻 Deploy To Nginx
+      #   run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.OUTPUT_DIR }}
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
