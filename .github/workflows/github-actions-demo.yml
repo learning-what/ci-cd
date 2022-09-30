@@ -27,10 +27,8 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script_stop: true
           script: |
-            rm -rf ${{ secrets.REPO_DIR }}/ci-cd
-            mkdir ${{ secrets.REPO_DIR }}/ci-cd
-            cd ${{ secrets.REPO_DIR }}/ci-cd
-            pwd
-
+            rm -rf ${{ secrets.REPO_DIR }}/ci-cd && cd ${{ secrets.REPO_DIR }}
+            git clone git@github.com:ChenYuTong10/ci-cd.git && cd ci-cd
+            ls -al
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
