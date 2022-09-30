@@ -40,8 +40,8 @@ jobs:
 
       - name: 📡 List Files
         run: | 
-          mkdir -p /home/runner && chmod -R 777 /home/runner
-          echo "HOME=/home/runner" >> $GITHUB_ENV
+          sudo mkdir -p /home/runner && chmod -R 777 /home/runner
+          sudo echo "HOME=/home/runner" >> $GITHUB_ENV
 
       - name: 📡 Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> $HOME/.ssh/known_hosts
