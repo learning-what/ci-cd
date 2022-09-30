@@ -27,7 +27,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script_stop: true
           script: |
-            rm -r ${{ secrets.REPO_DIR }}/ci-cd
+            rm -rf ${{ secrets.REPO_DIR }}/ci-cd
             mkdir ${{ secrets.REPO_DIR }}/ci-cd
             cd ${{ secrets.REPO_DIR }}/ci-cd
             pwd
